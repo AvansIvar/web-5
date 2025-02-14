@@ -8,18 +8,17 @@ var Course = mongoose.model('Course');
 
 function getTeachers(req, res) {
 	var query = {};
-  
+
 	// Using populate to fill the courses field with actual course documents
 	Teacher.find(query).populate('courses')
-	  .then(data => {
+	.then(data => {
 		res.json(data);
-	  })
-	  .catch(err => {
+	})
+	.catch(err => {
 		console.log('Error: ' + err.message);
 		res.status(500).send(err.message);
-	  });
-  }
-  
+	});
+}
 
 function addTeacher(req, res){
     var teacher = new Teacher(req.body);
