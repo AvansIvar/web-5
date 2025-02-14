@@ -1,0 +1,9 @@
+{
+    "name": "example02",
+    "version": "0.0.1",
+    "type": "module",
+    "dependencies": {
+        "example02": "file:",
+        "underscore": "1.13.7"
+    }
+}
