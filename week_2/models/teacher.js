@@ -32,4 +32,16 @@ teacherSchema.virtual('fullname').get(function(){
     return fullName;
 });
 
+// Queries
+teacherSchema.query.byPage = function (pageSize, pageIndex) {
+    return this.find()
+        .limit(parseInt(pageSize))
+        .skip(pageIndex * pageSize);
+};
+
+teacherSchema.query.byName = function () {
+    return this.find()
+        .sort({firstName : 1})
+};
+
 mongoose.model('Teacher', teacherSchema);
