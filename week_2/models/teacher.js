@@ -44,4 +44,11 @@ teacherSchema.query.byName = function () {
         .sort({firstName : 1})
 };
 
+// Middleware
+teacherSchema.pre('save', function(next) {
+    console.log('Teacher will be saved.');
+    next();
+    console.log('Teacher is saved.');
+})
+
 mongoose.model('Teacher', teacherSchema);
