@@ -1,20 +1,19 @@
+require('dotenv').config();
 var mongoose = require('mongoose');
-mongoose.Promise = require('q').Promise;
+mongoose.Promise = global.Promise;
 
-module.exports = function(){
-	if(mongoose.connection.readyState == 0){
-		// Get these from config
-		var uri = 'mongodb://127.0.0.1:27017/coursesDemo';
-		var options = {
-			db: { native_parser: true },
-			server: { poolSize: 5 },
-			replset: { rs_name: 'myReplicaSetName' },
-			user: 'myUserName',
-			pass: 'myPassword'
-		}
+module.exports = function () {
+  if (mongoose.connection.readyState === 0) {
+    const uri = process.env.MONGO_URI;
+    const options = {
+      serverSelectionTimeoutMS: 30000,
+      user: process.env.MONGO_USER,
+      pass: process.env.MONGO_PASS,
+    };
 
-		//mongoose.connect(uri, options);
-		mongoose.connect(uri);
-	}
-	return mongoose;
+    mongoose.connect(uri, options)
+      .then(() => console.log('Connected to MongoDB successfully!'))
+      .catch((err) => console.error('Error connecting to MongoDB:', err));
+  }
+  return mongoose;
 };

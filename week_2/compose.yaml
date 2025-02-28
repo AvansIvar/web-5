@@ -1,0 +1,30 @@
+services:
+  mongodb:
+    image: mongodb/mongodb-community-server
+    container_name: mongodb-container
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - wortelbier
+
+  node-app:
+    build:
+      context: .
+    container_name: node-app-container
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - mongodb
+    networks:
+      - wortelbier
+
+networks:
+  wortelbier:
+    driver: bridge
+
+volumes:
+  mongodb-data:
